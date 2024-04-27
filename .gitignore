@@ -1,0 +1,6 @@
+secrets
+composer.lock
+scripts
+vendor
+data
+.idea
