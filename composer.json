@@ -1,5 +1,5 @@
 {
-  "name": "rstasiak/etl",
+  "name": "rstasiak/rsetl",
   "autoload": {
     "psr-4": {
       "RSETL\\": "src/"
