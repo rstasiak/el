@@ -2,10 +2,10 @@
 
 namespace RSETL\Load\Sqlite;
 
+use PDO;
 use RSETL\Core\Collection;
 use RSETL\Contract\LoaderInterface;
-use RSETL\Service\BulkInsertService;
-use PDO;
+use RSETL\Load\Service\BulkInsertService;
 
 class SqliteLoader implements LoaderInterface
 {

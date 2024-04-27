@@ -1,6 +1,6 @@
 <?php
 
-namespace RSETL\Service;
+namespace RSETL\Load\Service;
 
 use RSETL\Core\Collection;
 
