@@ -7,20 +7,18 @@ use RSETL\Core\Collection;
 use Exception;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Google\Cloud\Core\ExponentialBackoff;
-use Monolog\Logger;
 
 
 class BigQueryExtract implements ExtractInterface
 {
 
 
-    public function __construct(private BigQueryClient $client, private Logger $logger)
+    public function __construct(private BigQueryClient $client)
     {
     }
 
     public function extract(array $command):Collection
     {
-        $this->logger->info('BigQueryExtract has started');
 
         $sql = $command['sql'];
 
