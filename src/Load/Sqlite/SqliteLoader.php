@@ -3,9 +3,8 @@
 namespace RSETL\Load\Sqlite;
 
 use PDO;
-use RSETL\Core\Collection;
+use RSETL\Core\Helper;
 use RSETL\Contract\LoaderInterface;
-use RSETL\Load\Service\BulkInsertService;
 
 class SqliteLoader implements LoaderInterface
 {
@@ -14,64 +13,61 @@ class SqliteLoader implements LoaderInterface
     {
     }
 
-    public function load(array $command, Collection $collection)
+    public function load(array $command, array $data): void
     {
-        $allowed = ['append', 'replace'];
+
+        $table = $command['table'];
+        $fields = $command['fields'];
+
+        $hasTable = $this->hasTable($table);
+
         $mode = $command['mode'];
 
-        if (!in_array($mode, $allowed))
-        {
-            throw new \Exception('bad mode');
+        if ($hasTable && $mode == 'replace') {
+
+            $this->deleteTable($table);
+            $hasTable = false;
+
         }
 
-        if ($mode == 'replace') {
+        if ( !$hasTable) {
 
-            $this->replace($command, $collection);
+            $initial = Helper::generateInitialSchema(array_keys($data[0]));
+            $schema = Helper::mergeSchema($initial, $fields);
 
-        } else {
-
-            $this->append($command, $collection);
+            $this->createTable($table, $schema);
         }
 
+        $this->loadToTable($table, $data);
 
     }
 
-    private function replace(array $command, Collection $collection)
-    {
-        $tableName = $command['table'];
 
-        if ($this->hasTable($tableName)) {
 
-            $this->deleteTable($tableName);
-        }
-
-        $this->append($command, $collection);
-
-    }
-
-    private function append(array $command, Collection $collection)
+    private function createTable(string $table, array $fields): void
     {
 
-        $tableName = $command['table'];
+        $mapped = array_map(function(array $row) {
 
-        if (!$this->hasTable($tableName)) {
+            $types = [
 
-            $this->createTable($tableName, $collection->getFields());
+                'integer' => 'INTEGER',
+                'string' => 'STRING'
+            ];
 
-        }
+            $type = $types[$row['type']];
 
-        $this->loadData($tableName, $collection);
+            return $row['name'] . ' ' . $type;
 
-    }
+        }, $fields);
 
-    private function createTable(string $tableName, array $fields) {
 
-        $sql = 'CREATE TABLE ' . $tableName . '(' . $this->renderCreateFields($fields) . ')';
+        $sql = 'CREATE TABLE ' . $table . ' (' . implode(', ', $mapped) . ')';
         $this->db->exec($sql);
 
     }
 
-    private function deleteTable($tableName)
+    private function deleteTable($tableName): void
     {
         $sql = "DROP TABLE IF EXISTS " . $tableName;
         $this->db->exec($sql);
@@ -86,56 +82,28 @@ class SqliteLoader implements LoaderInterface
 
     }
 
-    private function loadData(string $tableName, Collection $collection)
+    private function loadToTable(string $tableName, array $data): void
     {
-        $service = new BulkInsertService();
 
-        $sql = 'INSERT INTO ' . $tableName . ' (' . $this->renderInsertFields($collection->getFields()) . ') VALUES ' ;
-        $sql .= $service->create($collection);
+        $lines = array_map(function(array $row) {
+
+            $values = [];
+
+            foreach($row as $value) {
+
+                $values[] = $this->db->quote($value);
+            }
+
+            return '(' . implode(', ', $values) . ')';
+
+
+        }, $data);
+
+        $fields = array_keys($data[0]);
+
+        $sql = 'INSERT INTO ' . $tableName . ' (' . implode(', ', $fields) . ') VALUES ' . implode(', ', $lines) ;
 
         $this->db->exec($sql);
 
     }
-
-    private function renderCreateFields(array $fields): string
-    {
-
-
-        $types = [
-
-            'string' => 'TEXT',
-            'integer' => 'INTEGER',
-            'float' => 'REAL'
-        ];
-
-        $string = '';
-
-        foreach($fields as $key => $type) {
-
-            $string .= $key . ' ' . $types[$type] . ', ';
-
-        }
-
-        $string = substr($string, 0, -2);
-
-        return $string;
-
-    }
-
-    private function renderInsertFields(array $fields): string
-    {
-
-
-        $string = '';
-
-        foreach($fields as $key => $type) {
-
-            $string .= $key . ', ';
-
-        }
-
-        return substr($string, 0, -2);
-
-    }
-
 }

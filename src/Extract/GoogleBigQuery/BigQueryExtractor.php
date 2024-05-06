@@ -2,14 +2,13 @@
 
 namespace RSETL\Extract\GoogleBigQuery;
 
-use RSETL\Contract\ExtractInterface;
-use RSETL\Core\Collection;
+use RSETL\Contract\ExtractorInterface;
 use Exception;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Google\Cloud\Core\ExponentialBackoff;
 
 
-class BigQueryExtract implements ExtractInterface
+class BigQueryExtractor implements ExtractorInterface
 {
 
 
@@ -17,7 +16,7 @@ class BigQueryExtract implements ExtractInterface
     {
     }
 
-    public function extract(array $command):Collection
+    public function extract(array $command):array
     {
 
         $sql = $command['sql'];
@@ -38,15 +37,13 @@ class BigQueryExtract implements ExtractInterface
 
         $rows = $queryResults->rows();
 
-        $collection = new Collection();
-
         foreach ($rows as $row) {
 
-            $collection->addRow($row);
+            $data[] = $row;
 
         }
 
-        return $collection;
+        return $data;
 
 
 

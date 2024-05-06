@@ -16,7 +16,7 @@ class Helper
 
         $filteredValue = preg_replace('/[^\d,-]/', '', $value);
         $filteredValue = str_replace(',', '.', $filteredValue);
-        return (float)$filteredValue;
+        return (float) $filteredValue;
     }
 
     public static function monthToDay(int $year, int $month, string $type = 'fiscal'): string
@@ -34,7 +34,7 @@ class Helper
         }
 
         $last = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $str = $year . '-' . $month . '-' . $last;
+        $str = $year.'-'.$month.'-'.$last;
         $date = \DateTime::createFromFormat("Y-m-d", $str);
         return $date->format("Ymd");
     }
@@ -56,8 +56,8 @@ class Helper
             $name = $field['name'];
             $type = $field['type'];
 
-            if (!in_array($type, $allowedTypes)) {
-                throw new Exception('unknown schema type: ' . $type);
+            if ( ! in_array($type, $allowedTypes)) {
+                throw new Exception('unknown schema type: '.$type);
             }
 
             $schema->setField($name, $type);
@@ -82,6 +82,43 @@ class Helper
 
         return $value + $l;
 
+    }
+
+    public static function mergeSchema(array $initial, array $overwrite): array
+    {
+
+
+        $result = [];
+        foreach ($initial as $item) {
+            $result[$item['name']] = $item;
+        }
+
+        foreach ($overwrite as $item) {
+            if (isset($result[$item['name']])) {
+                $result[$item['name']] = array_merge($result[$item['name']], $item);
+            } else {
+                $result[$item['name']] = $item;
+            }
+        }
+
+        return array_values($result);
+    }
+
+    public static function generateInitialSchema(array $keys): array
+    {
+
+        $data = [];
+
+        foreach ($keys as $key) {
+
+            $data[] = [
+                'name' => $key,
+                'type' => 'string',
+            ];
+
+        }
+
+        return $data;
     }
 
 
