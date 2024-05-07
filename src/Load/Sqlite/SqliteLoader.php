@@ -5,6 +5,7 @@ namespace RStasiak\EL\Load\Sqlite;
 use PDO;
 use RStasiak\EL\Core\Helper;
 use RStasiak\EL\Contract\LoaderInterface;
+use RStasiak\EL\Service\SchemaHelper;
 
 class SqliteLoader implements LoaderInterface
 {
@@ -16,8 +17,8 @@ class SqliteLoader implements LoaderInterface
     public function load(array $command, array $data): void
     {
 
-        $table = $command['table'];
-        $fields = $command['fields'];
+        $table = $command['table'] ?? '';
+        $fields = $command['fields'] ?? [];
 
         $hasTable = $this->hasTable($table);
 
@@ -32,8 +33,15 @@ class SqliteLoader implements LoaderInterface
 
         if ( !$hasTable) {
 
-            $initial = Helper::generateInitialSchema(array_keys($data[0]));
-            $schema = Helper::mergeSchema($initial, $fields);
+
+            $schema = SchemaHelper::generateInitialSchema(array_keys($data[0]));
+
+
+            if (!empty($fields)) {
+
+                $schema = SchemaHelper::mergeSchema($schema, $fields);
+
+            }
 
             $this->createTable($table, $schema);
         }
