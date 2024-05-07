@@ -1,10 +1,8 @@
 <?php
 
-namespace RSETL\Core;
+namespace RStasiak\EL\Core;
 
-use RSETL\Interface\GrabberInterface;
-use RSETL\Interface\RepositoryInterface;
-use Closure;
+
 use Exception;
 
 class Helper

@@ -1,10 +1,10 @@
 <?php
 
-namespace RSETL\Load\BiqQuery;
+namespace RStasiak\EL\Load\BiqQuery;
 
-use RSETL\Core\Helper;
+use RStasiak\EL\Core\Helper;
 use League\Csv\Writer;
-use RSETL\Contract\LoaderInterface;
+use RStasiak\EL\Contract\LoaderInterface;
 use Google\Cloud\BigQuery\BigQueryClient;
 
 class BigQueryLoader implements LoaderInterface

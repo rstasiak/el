@@ -2,7 +2,7 @@
   "name": "rstasiak/rsetl",
   "autoload": {
     "psr-4": {
-      "RSETL\\": "src/"
+      "RStasiak\\EL\\": "src/"
     }
   },
   "require": {

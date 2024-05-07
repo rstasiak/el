@@ -1,8 +1,9 @@
 <?php
 
-namespace RSETL\Extract\GoogleBigQuery;
 
-use RSETL\Contract\ExtractorInterface;
+namespace RStasiak\EL\Extract\GoogleBigQuery;
+
+use RStasiak\EL\ExtractorInterface;
 use Exception;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Google\Cloud\Core\ExponentialBackoff;

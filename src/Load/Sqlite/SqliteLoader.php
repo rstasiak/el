@@ -1,10 +1,10 @@
 <?php
 
-namespace RSETL\Load\Sqlite;
+namespace RStasiak\EL\Load\Sqlite;
 
 use PDO;
-use RSETL\Core\Helper;
-use RSETL\Contract\LoaderInterface;
+use RStasiak\EL\Core\Helper;
+use RStasiak\EL\Contract\LoaderInterface;
 
 class SqliteLoader implements LoaderInterface
 {

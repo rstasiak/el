@@ -1,8 +1,8 @@
 <?php
 
-namespace RSETL\Load\Oxla;
+namespace RStasiak\EL\Load\Oxla;
 
-use RSETL\Contract\LoaderInterface;
+use RStasiak\EL\Contract\LoaderInterface;
 
 class OxlaLoader implements LoaderInterface
 {

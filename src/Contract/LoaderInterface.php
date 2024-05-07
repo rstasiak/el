@@ -1,8 +1,6 @@
 <?php
 
-namespace RSETL\Contract;
-
-use RSETL\Core\Collection2;
+namespace RStasiak\EL\Contract;
 
 interface LoaderInterface
 {

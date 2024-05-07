@@ -1,10 +1,9 @@
 <?php
 
-namespace RSETL\Extract\Sql;
+namespace RStasiak\EL\Extract\Sql;
 
-use RSETL\Core\Collection2;
 use PDO;
-use RSETL\Contract\ExtractorInterface;
+use RStasiak\EL\Contract\ExtractorInterface;
 
 class SqlExtractor implements ExtractorInterface
 {

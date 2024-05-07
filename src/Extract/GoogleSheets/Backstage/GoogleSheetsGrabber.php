@@ -1,6 +1,6 @@
 <?php
 
-namespace RSETL\Extract\GoogleSheets\Backstage;
+namespace RStasiak\EL\Extract\GoogleSheets\Backstage;
 
 
 use Google_Service_Sheets;

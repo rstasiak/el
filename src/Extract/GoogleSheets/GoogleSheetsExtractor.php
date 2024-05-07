@@ -1,11 +1,9 @@
 <?php
 
-namespace RSETL\Extract\GoogleSheets;
+namespace RStasiak\EL\Extract\GoogleSheets;
 
-use RSETL\Contract\ExtractorInterface;
-use RSETL\Core\Collection2;
-use RSETL\Extract\GoogleSheets\Backstage\GoogleSheetsGrabber;
-use Monolog\Logger;
+use RStasiak\EL\Contract\ExtractorInterface;
+use RStasiak\EL\Extract\GoogleSheets\Backstage\GoogleSheetsGrabber;
 
 class GoogleSheetsExtractor implements ExtractorInterface
 {
