@@ -3,10 +3,10 @@
 
 namespace RStasiak\EL\Extract\GoogleBigQuery;
 
-use RStasiak\EL\ExtractorInterface;
 use Exception;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Google\Cloud\Core\ExponentialBackoff;
+use RStasiak\EL\Contract\ExtractorInterface;
 
 
 class BigQueryExtractor implements ExtractorInterface
