@@ -31,7 +31,8 @@ class GoogleSheetsExtractor implements ExtractorInterface
             }
         }
 
-        print_r($output);die;
+        return $output;
+
 
 
 
