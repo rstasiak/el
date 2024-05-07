@@ -1,5 +1,5 @@
 {
-  "name": "rstasiak/rsetl",
+  "name": "rstasiak/el",
   "autoload": {
     "psr-4": {
       "RStasiak\\EL\\": "src/"
