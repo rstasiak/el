@@ -4,6 +4,7 @@ namespace RStasiak\EL\Load\Sqlite;
 
 use PDO;
 use RStasiak\EL\Contract\LoaderInterface;
+use RStasiak\EL\Model\Fields;
 use RStasiak\EL\Service\SchemaHelper;
 
 class SqliteLoader implements LoaderInterface
@@ -18,6 +19,7 @@ class SqliteLoader implements LoaderInterface
 
         $table = $command['table'] ?? '';
         $fields = $command['fields'] ?? [];
+
 
         $hasTable = $this->hasTable($table);
 
@@ -43,9 +45,11 @@ class SqliteLoader implements LoaderInterface
             }
 
             $this->createTable($table, $schema);
+
         }
 
-        $this->loadToTable($table, $data);
+        $types = SchemaHelper::getTypes($schema);
+        $this->loadToTable($table, $data, $types);
 
     }
 
@@ -89,16 +93,28 @@ class SqliteLoader implements LoaderInterface
 
     }
 
-    private function loadToTable(string $tableName, array $data): void
+    private function loadToTable(string $tableName, array $data, array $types): void
     {
 
-        $lines = array_map(function(array $row) {
+        $lines = array_map(function(array $row) use ($types) {
 
             $values = [];
 
-            foreach($row as $value) {
+            foreach($row as $key => $value) {
 
-                $values[] = $this->db->quote($value);
+                if (is_null($value)) {
+
+                    $value = '';
+                }
+
+               $type = $types[$key] ?? 'string';
+
+                $quoteType = match ($type) {
+                    default => PDO::PARAM_STR,
+                    'integer' => PDO::PARAM_INT,
+                };
+
+                $values[] = $this->db->quote($value, $quoteType);
             }
 
             return '(' . implode(', ', $values) . ')';

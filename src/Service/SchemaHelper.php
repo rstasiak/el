@@ -41,4 +41,21 @@ class SchemaHelper
         return $data;
     }
 
+    public static function getTypes(array $schema): array
+    {
+        $types = [];
+
+
+        foreach($schema as $field) {
+
+            $name = $field['name'];
+            $type = $field['type'];
+            $types[$name] = $type;
+
+        }
+
+        return $types;
+
+    }
+
 }
