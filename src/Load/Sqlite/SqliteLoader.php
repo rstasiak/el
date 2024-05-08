@@ -3,7 +3,6 @@
 namespace RStasiak\EL\Load\Sqlite;
 
 use PDO;
-use RStasiak\EL\Core\Helper;
 use RStasiak\EL\Contract\LoaderInterface;
 use RStasiak\EL\Service\SchemaHelper;
 
