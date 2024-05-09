@@ -6,6 +6,7 @@ use RStasiak\EL\Core\Helper;
 use League\Csv\Writer;
 use RStasiak\EL\Contract\LoaderInterface;
 use Google\Cloud\BigQuery\BigQueryClient;
+use RStasiak\EL\Service\SchemaHelper;
 
 class BigQueryLoader implements LoaderInterface
 {
@@ -19,7 +20,7 @@ class BigQueryLoader implements LoaderInterface
 
         $datasetId = $command['dataset'];
         $tableId = $command['table'];
-        $fields = $command['fields'];
+        $fields = $command['fields'] ?? [];
 
         $hasTable = $this->hasTable($datasetId, $tableId);
 
@@ -36,9 +37,9 @@ class BigQueryLoader implements LoaderInterface
 
         if ( ! $hasTable) {
 
-            $initial = $this->generateInitialFields(array_keys($data[0]));
-            $schema = Helper::mergeSchema($initial, $fields);
 
+            $initial = SchemaHelper::generateInitialSchema(array_keys($data[0]));
+            $schema = SchemaHelper::mergeSchema($initial, $fields);
             $this->createTable($datasetId, $tableId, $schema);
         }
 
@@ -47,23 +48,6 @@ class BigQueryLoader implements LoaderInterface
 
     }
 
-    private function generateInitialFields(array $keys): array
-    {
-
-        $data = [];
-
-        foreach($keys as $key) {
-
-            $data[] = [
-                'name' => $key,
-                'type' => 'string'
-            ];
-
-        }
-
-        return $data;
-
-    }
 
 
 
