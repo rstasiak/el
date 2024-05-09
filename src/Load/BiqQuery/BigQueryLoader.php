@@ -2,7 +2,6 @@
 
 namespace RStasiak\EL\Load\BiqQuery;
 
-use RStasiak\EL\Core\Helper;
 use League\Csv\Writer;
 use RStasiak\EL\Contract\LoaderInterface;
 use Google\Cloud\BigQuery\BigQueryClient;
