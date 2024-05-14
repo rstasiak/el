@@ -32,17 +32,17 @@ class SqliteLoader implements LoaderInterface
 
         }
 
+        $schema = SchemaHelper::generateInitialSchema(array_keys($data[0]));
+
+
+        if (!empty($fields)) {
+
+            $schema = SchemaHelper::mergeSchema($schema, $fields);
+
+        }
+
         if ( !$hasTable) {
 
-
-            $schema = SchemaHelper::generateInitialSchema(array_keys($data[0]));
-
-
-            if (!empty($fields)) {
-
-                $schema = SchemaHelper::mergeSchema($schema, $fields);
-
-            }
 
             $this->createTable($table, $schema);
 
