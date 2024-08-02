@@ -29,6 +29,7 @@ class MysqlLoader
 
         }
 
+
         $schema = SchemaHelper::generateInitialSchema(array_keys($data[0]));
 
         if (!empty($fields)) {
@@ -88,7 +89,7 @@ class MysqlLoader
     {
 
 
-        $sql = "SHOW TABLES LIKE `'". $table . "`'";
+        $sql = "SHOW TABLES LIKE '". $table . "'";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         $res = $stmt->fetch(\PDO::FETCH_ASSOC);
