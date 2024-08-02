@@ -70,7 +70,7 @@ class MysqlLoader
         }, $fields);
 
 
-        $sql = 'CREATE TABLE ' . $table . ' (' . implode(', ', $mapped) . ')';
+        $sql = 'CREATE TABLE `' . $table . '` (' . implode(', ', $mapped) . ')';
 
         $this->db->exec($sql);
 
@@ -78,7 +78,7 @@ class MysqlLoader
 
     private function deleteTable($table): void
     {
-        $sql = "DROP TABLE IF EXISTS " . $table;
+        $sql = "DROP TABLE IF EXISTS `" . $table . "`";
         $this->db->exec($sql);
 
     }
@@ -88,7 +88,7 @@ class MysqlLoader
     {
 
 
-        $sql = "SHOW TABLES LIKE '". $table . "'";
+        $sql = "SHOW TABLES LIKE `'". $table . "`'";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         $res = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -142,7 +142,7 @@ class MysqlLoader
 
         $fields = array_keys($data[0]);
 
-        $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $fields) . ') VALUES ' . implode(', ', $lines);
+        $sql = 'INSERT INTO `' . $table . '` (' . implode(', ', $fields) . ') VALUES ' . implode(', ', $lines);
 
         $this->db->exec($sql);
 
