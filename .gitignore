@@ -6,3 +6,4 @@ secrets
 temp
 scripts
 tests
+.DS_Store
