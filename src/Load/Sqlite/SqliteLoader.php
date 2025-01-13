@@ -63,7 +63,8 @@ class SqliteLoader implements LoaderInterface
             $types = [
 
                 'integer' => 'INTEGER',
-                'string' => 'STRING'
+                'string' => 'STRING',
+                'float' => 'REAL',
             ];
 
             $type = $types[$row['type']];
