@@ -4,7 +4,6 @@ namespace RStasiak\EL\Load\Sqlite;
 
 use PDO;
 use RStasiak\EL\Contract\LoaderInterface;
-use RStasiak\EL\Model\Fields;
 use RStasiak\EL\Service\SchemaHelper;
 
 class SqliteLoader implements LoaderInterface

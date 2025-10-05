@@ -6,10 +6,11 @@
     }
   },
   "require": {
-    "google/apiclient": "^2.15.0",
-    "league/csv": "^9.15",
+    "google/apiclient": "*",
+    "league/csv": "*",
     "ext-pdo": "*",
-    "google/cloud-bigquery": "^1.30",
-    "phpoffice/phpspreadsheet": "^2.2"
+    "google/cloud-bigquery": "*",
+    "phpoffice/phpspreadsheet": "*",
+    "typesense/typesense-php": "^5.1"
   }
 }
