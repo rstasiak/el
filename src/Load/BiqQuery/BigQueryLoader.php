@@ -105,7 +105,7 @@ class BigQueryLoader implements LoaderInterface
         $csv = Writer::createFromString();
         $csv->insertAll($data);
 
-        $path = ROOT_DIR . '/' . uniqid() . '.csv';
+        $path = sys_get_temp_dir() . '/' . uniqid() . '.csv';
         file_put_contents($path, $csv->toString());
 
 
