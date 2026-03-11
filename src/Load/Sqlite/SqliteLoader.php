@@ -131,17 +131,3 @@ class SqliteLoader implements LoaderInterface
 
     }
 }
-
-
-$repository = $c->get(ItemRepository::class);
-
-$item = new Item('ABCD');
-$item->setName('test');
-$item->setCategoryId(12);
-$item->setStructureId(16);
-$item->addEntry(new Entry(2024, 12, 1, 345.55, 'PLN'));
-$item->addEntry(new Entry(2024, 11, 23, 200.55, 'PLN'));
-$item->addRecord(new Record(2024, 12, 1, 345.55, 'PLN'));
-$item->addRecord(new Record(2024, 11, 23, 200.55, 'PLN'));
-
-$repository->save($item);
